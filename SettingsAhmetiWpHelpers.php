@@ -35,17 +35,24 @@ class SettingsAhmetiWpHelpers extends AhmetiWpHelpers
     public function registerSettings()
     {
         register_setting($this->key('options'), $this->key('options'), [$this, 'validateSettings']);
+
         add_settings_section('settings', null, [$this, 'settingTitle'], $this->slug());
 
         add_settings_field($this->key(parent::DISABLE_REST_API), 'Disable Rest Api (Guests)', [
             $this,
             'settingDisableRestApi'
         ], $this->slug(), 'settings');
+
+        add_settings_field($this->key(parent::DISABLE_XML_RPC), 'Disable XML RPC', [
+            $this,
+            'settingDisableXmlRpc'
+        ], $this->slug(), 'settings');
     }
 
     public function validateSettings($input)
     {
         $newinput[parent::DISABLE_REST_API] = empty($input[parent::DISABLE_REST_API]) ? false : true;
+        $newinput[parent::DISABLE_XML_RPC] = empty($input[parent::DISABLE_XML_RPC]) ? false : true;
 
         return $newinput;
     }
@@ -60,6 +67,16 @@ class SettingsAhmetiWpHelpers extends AhmetiWpHelpers
         $value = $this->getOption(parent::DISABLE_REST_API);
 
         echo '<select name="'.$this->key('options['.parent::DISABLE_REST_API.']').'">'.
+             '<option value="0">No</option>'.
+             '<option value="1"'.($value ? ' selected' : '').'>Yes</option>'.
+             '</select>';
+    }
+
+    public function settingDisableXmlRpc()
+    {
+        $value = $this->getOption(parent::DISABLE_XML_RPC);
+
+        echo '<select name="'.$this->key('options['.parent::DISABLE_XML_RPC.']').'">'.
              '<option value="0">No</option>'.
              '<option value="1"'.($value ? ' selected' : '').'>Yes</option>'.
              '</select>';

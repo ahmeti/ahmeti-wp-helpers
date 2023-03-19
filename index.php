@@ -25,6 +25,7 @@ if ( ! defined('ABSPATH')) {
 class AhmetiWpHelpers
 {
     const DISABLE_REST_API = 'disable_rest_api';
+    const DISABLE_XML_RPC = 'disable_xml_rpc';
 
     private $title = 'Ahmeti WP Helpers';
     private $slug = 'ahmeti-wp-helpers';
@@ -45,6 +46,11 @@ class AhmetiWpHelpers
         if (isset($this->options[self::DISABLE_REST_API]) && $this->options[self::DISABLE_REST_API]) {
             require_once($helperDir.'DisableRestApiAhmetiWpHelpers.php');
             new DisableRestApiAhmetiWpHelpers();
+        }
+
+        if (isset($this->options[self::DISABLE_XML_RPC]) && $this->options[self::DISABLE_XML_RPC]) {
+            require_once($helperDir.'DisableXmlRpcAhmetiWpHelpers.php');
+            new DisableXmlRpcAhmetiWpHelpers();
         }
     }
 
