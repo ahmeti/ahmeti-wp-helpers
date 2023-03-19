@@ -1,21 +1,16 @@
 <?php
 
 /**
- * Plugin Name
- *
- * @package           AhmetiWpHelpers
- * @author            Ahmet Imamoglu
- * @license           MIT
- *
- * @wordpress-plugin
  * Plugin Name:       Ahmeti WP Helpers
- * Plugin URI:        https://ahmeti.com.tr/
- * Description:       Ahmet WP Helpers
+ * Description:       Performance focused, and you can activate some helpers easily.
  * Version:           1.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.1
  * Author:            Ahmet Imamoglu
  * Author URI:        https://ahmeti.com.tr/
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       ahmeti-wp-helpers
  */
 
 if ( ! defined('ABSPATH')) {
@@ -24,12 +19,13 @@ if ( ! defined('ABSPATH')) {
 
 class AhmetiWpHelpers
 {
+    const TITLE = 'Ahmeti WP Helpers';
+    const SLUG = 'ahmeti-wp-helpers';
+    const KEY = 'ahmeti_wp_helpers';
+
     const DISABLE_REST_API = 'disable_rest_api';
     const DISABLE_XML_RPC = 'disable_xml_rpc';
 
-    private $title = 'Ahmeti WP Helpers';
-    private $slug = 'ahmeti-wp-helpers';
-    private $key = 'ahmeti_wp_helpers';
     private $options = null;
 
     public function init()
@@ -37,36 +33,36 @@ class AhmetiWpHelpers
         $this->setOptions();
 
         if (is_admin()) {
-            require_once(__DIR__.DIRECTORY_SEPARATOR.'SettingsAhmetiWpHelpers.php');
+            require_once __DIR__.DIRECTORY_SEPARATOR.'SettingsAhmetiWpHelpers.php';
             new SettingsAhmetiWpHelpers();
         }
 
-        $helperDir = __DIR__.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR;
+        $helpersDir = __DIR__.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR;
 
         if (isset($this->options[self::DISABLE_REST_API]) && $this->options[self::DISABLE_REST_API]) {
-            require_once($helperDir.'DisableRestApiAhmetiWpHelpers.php');
+            require_once $helpersDir.'DisableRestApiAhmetiWpHelpers.php';
             new DisableRestApiAhmetiWpHelpers();
         }
 
         if (isset($this->options[self::DISABLE_XML_RPC]) && $this->options[self::DISABLE_XML_RPC]) {
-            require_once($helperDir.'DisableXmlRpcAhmetiWpHelpers.php');
+            require_once $helpersDir.'DisableXmlRpcAhmetiWpHelpers.php';
             new DisableXmlRpcAhmetiWpHelpers();
         }
     }
 
     public function title()
     {
-        return $this->title;
+        return self::TITLE;
     }
 
     public function slug($text = null)
     {
-        return $this->slug.(empty($text) ? '' : '_'.$text);
+        return self::SLUG.(empty($text) ? '' : '_'.$text);
     }
 
     public function key($text = null)
     {
-        return $this->key.(empty($text) ? '' : '_'.$text);
+        return self::KEY.(empty($text) ? '' : '_'.$text);
     }
 
     protected function setOptions()
