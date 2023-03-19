@@ -37,15 +37,15 @@ class SettingsAhmetiWpHelpers extends AhmetiWpHelpers
         register_setting($this->key('options'), $this->key('options'), [$this, 'validateSettings']);
         add_settings_section('settings', null, [$this, 'settingTitle'], $this->slug());
 
-        add_settings_field($this->key('disable_api'), 'Disable Api', [
+        add_settings_field($this->key(parent::DISABLE_REST_API), 'Disable Rest Api (Guests)', [
             $this,
-            'settingDisableApi'
+            'settingDisableRestApi'
         ], $this->slug(), 'settings');
     }
 
     public function validateSettings($input)
     {
-        $newinput['disable_api'] = $input['disable_api'] == 1 ? true : false;
+        $newinput[parent::DISABLE_REST_API] = empty($input[parent::DISABLE_REST_API]) ? false : true;
 
         return $newinput;
     }
@@ -55,11 +55,11 @@ class SettingsAhmetiWpHelpers extends AhmetiWpHelpers
         echo '<h1>'.$this->title().'</h1>';
     }
 
-    public function settingDisableApi()
+    public function settingDisableRestApi()
     {
-        $value = $this->getOption('disable_api');
+        $value = $this->getOption(parent::DISABLE_REST_API);
 
-        echo '<select name="'.$this->key('options[disable_api]').'">'.
+        echo '<select name="'.$this->key('options['.parent::DISABLE_REST_API.']').'">'.
              '<option value="0">No</option>'.
              '<option value="1"'.($value ? ' selected' : '').'>Yes</option>'.
              '</select>';

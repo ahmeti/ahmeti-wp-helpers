@@ -24,6 +24,8 @@ if ( ! defined('ABSPATH')) {
 
 class AhmetiWpHelpers
 {
+    const DISABLE_REST_API = 'disable_rest_api';
+
     private $title = 'Ahmeti WP Helpers';
     private $slug = 'ahmeti-wp-helpers';
     private $key = 'ahmeti_wp_helpers';
@@ -34,8 +36,15 @@ class AhmetiWpHelpers
         $this->setOptions();
 
         if (is_admin()) {
-            require_once __DIR__.DIRECTORY_SEPARATOR.'SettingsAhmetiWpHelpers.php';
+            require_once(__DIR__.DIRECTORY_SEPARATOR.'SettingsAhmetiWpHelpers.php');
             new SettingsAhmetiWpHelpers();
+        }
+
+        $helperDir = __DIR__.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR;
+
+        if (isset($this->options[self::DISABLE_REST_API]) && $this->options[self::DISABLE_REST_API]) {
+            require_once($helperDir.'DisableRestApiAhmetiWpHelpers.php');
+            new DisableRestApiAhmetiWpHelpers();
         }
     }
 
