@@ -26,7 +26,7 @@ class SettingsAhmetiWpHelpers extends AhmetiWpHelpers
                 settings_fields($this->key('options'));
                 do_settings_sections($this->slug()); ?>
                 <input name="submit" class="button button-primary" type="submit"
-                       value="<?php esc_attr_e('Save'); ?>"/>
+                       value="<?php echo esc_attr('Save'); ?>"/>
             </form>
         </div>
         <?php
@@ -59,14 +59,14 @@ class SettingsAhmetiWpHelpers extends AhmetiWpHelpers
 
     public function settingTitle()
     {
-        echo '<h1>'.$this->title().'</h1>';
+        echo '<h1>'.esc_html($this->title()).'</h1>';
     }
 
     public function settingDisableRestApi()
     {
         $value = $this->getOption(parent::DISABLE_REST_API);
 
-        echo '<select name="'.$this->key('options['.parent::DISABLE_REST_API.']').'">'.
+        echo '<select name="'.esc_attr($this->key('options['.parent::DISABLE_REST_API.']')).'">'.
              '<option value="0">No</option>'.
              '<option value="1"'.($value ? ' selected' : '').'>Yes</option>'.
              '</select>';
@@ -76,7 +76,7 @@ class SettingsAhmetiWpHelpers extends AhmetiWpHelpers
     {
         $value = $this->getOption(parent::DISABLE_XML_RPC);
 
-        echo '<select name="'.$this->key('options['.parent::DISABLE_XML_RPC.']').'">'.
+        echo '<select name="'.esc_attr($this->key('options['.parent::DISABLE_XML_RPC.']')).'">'.
              '<option value="0">No</option>'.
              '<option value="1"'.($value ? ' selected' : '').'>Yes</option>'.
              '</select>';
