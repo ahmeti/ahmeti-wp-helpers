@@ -4,7 +4,7 @@
  * Plugin Name:       Ahmeti WP Helpers
  * Plugin URI:        https://ahmeti.com.tr/ahmeti-wp-helpers
  * Description:       Performance focused, and you can activate some helpers easily.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 5.2
  * Requires PHP:      7.1
  * Author:            Ahmet Imamoglu
