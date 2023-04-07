@@ -26,6 +26,7 @@ class AhmetiWpHelpers
 
     const DISABLE_REST_API = 'disable_rest_api';
     const DISABLE_XML_RPC = 'disable_xml_rpc';
+    const JAVASCRIPT_DEFER = 'javascript_defer';
 
     private $options = null;
 
@@ -48,6 +49,11 @@ class AhmetiWpHelpers
         if (isset($this->options[self::DISABLE_XML_RPC]) && $this->options[self::DISABLE_XML_RPC]) {
             require_once $helpersDir.'DisableXmlRpcAhmetiWpHelpers.php';
             new DisableXmlRpcAhmetiWpHelpers();
+        }
+
+        if (isset($this->options[self::JAVASCRIPT_DEFER]) && $this->options[self::JAVASCRIPT_DEFER]) {
+            require_once $helpersDir.'JavascriptDeferAhmetiWpHelpers.php';
+            new JavascriptDeferAhmetiWpHelpers();
         }
     }
 

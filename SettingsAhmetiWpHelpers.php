@@ -47,12 +47,18 @@ class SettingsAhmetiWpHelpers extends AhmetiWpHelpers
             $this,
             'settingDisableXmlRpc'
         ], $this->slug(), 'settings');
+
+        add_settings_field($this->key(parent::JAVASCRIPT_DEFER), 'Javascript Defer & CF', [
+            $this,
+            'settingJavascriptDefer'
+        ], $this->slug(), 'settings');
     }
 
     public function validateSettings($input)
     {
-        $newinput[parent::DISABLE_REST_API] = empty($input[parent::DISABLE_REST_API]) ? false : true;
-        $newinput[parent::DISABLE_XML_RPC] = empty($input[parent::DISABLE_XML_RPC]) ? false : true;
+        $newinput[parent::DISABLE_REST_API] = ! empty($input[parent::DISABLE_REST_API]);
+        $newinput[parent::DISABLE_XML_RPC]  = ! empty($input[parent::DISABLE_XML_RPC]);
+        $newinput[parent::JAVASCRIPT_DEFER] = ! empty($input[parent::JAVASCRIPT_DEFER]);
 
         return $newinput;
     }
@@ -77,6 +83,16 @@ class SettingsAhmetiWpHelpers extends AhmetiWpHelpers
         $value = $this->getOption(parent::DISABLE_XML_RPC);
 
         echo '<select name="'.esc_attr($this->key('options['.parent::DISABLE_XML_RPC.']')).'">'.
+             '<option value="0">No</option>'.
+             '<option value="1"'.($value ? ' selected' : '').'>Yes</option>'.
+             '</select>';
+    }
+
+    public function settingJavascriptDefer()
+    {
+        $value = $this->getOption(parent::JAVASCRIPT_DEFER);
+
+        echo '<select name="'.esc_attr($this->key('options['.parent::JAVASCRIPT_DEFER.']')).'">'.
              '<option value="0">No</option>'.
              '<option value="1"'.($value ? ' selected' : '').'>Yes</option>'.
              '</select>';
